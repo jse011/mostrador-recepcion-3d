@@ -701,6 +701,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        z-index: 30;
       }
 
       .brand-title {
@@ -717,24 +718,34 @@
         gap: 6px;
       }
 
-      /* Barra de herramientas superior adaptada para móvil */
+      /* Barra de herramientas superior adaptada: se mantiene ARRIBA bajo el header con scroll horizontal si es necesario */
       .top-controls {
-        top: auto;
-        bottom: 76px;
+        top: 60px;
+        bottom: auto;
         left: 10px;
         right: 10px;
-        justify-content: center;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         gap: 6px;
         background: var(--panel-bg);
         padding: 6px 10px;
         border-radius: 12px;
         border: 1px solid var(--panel-border);
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        z-index: 25;
+      }
+
+      .top-controls::-webkit-scrollbar {
+        display: none;
       }
 
       .top-controls .btn, .top-controls .env-select {
-        padding: 7px 9px;
-        font-size: 0.74rem;
+        padding: 6px 9px;
+        font-size: 0.72rem;
+        flex-shrink: 0;
+        white-space: nowrap;
       }
 
       /* Modal / Bottom-Sheet para parámetros en móviles */
@@ -746,10 +757,10 @@
         right: 0;
         width: 100vw;
         border-radius: 18px 18px 0 0;
-        padding: 16px 18px 24px 18px;
+        padding: 16px 18px calc(24px + env(safe-area-inset-bottom, 0px)) 18px;
         box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
-        z-index: 40;
-        transform: translateY(110%);
+        z-index: 50;
+        transform: translateY(115%);
         max-height: 85vh;
         overflow-y: auto;
       }
@@ -794,32 +805,38 @@
         text-align: center;
       }
 
-      /* Barra inferior compacta en móviles */
+      /* Barra inferior flotante en móviles: totalmente visible con safe-area y alto z-index */
       .bottom-bar {
-        bottom: 10px;
+        position: fixed;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
         left: 10px;
         right: 10px;
         transform: none;
         width: calc(100vw - 20px);
         max-width: none;
-        padding: 6px 10px;
+        padding: 8px 10px;
         flex-direction: column;
         gap: 6px;
+        z-index: 30;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       }
 
       .view-buttons {
         border-right: none;
         padding-right: 0;
         width: 100%;
+        display: flex;
         justify-content: space-between;
+        gap: 4px;
         overflow-x: auto;
       }
 
       .view-buttons .btn {
         padding: 6px 8px;
-        font-size: 0.74rem;
+        font-size: 0.72rem;
         flex: 1;
         justify-content: center;
+        white-space: nowrap;
       }
 
       .slider-control {
@@ -840,6 +857,7 @@
         right: 0;
         width: 100vw;
         border-radius: 0;
+        z-index: 45;
         transform: translateY(100%);
       }
 
